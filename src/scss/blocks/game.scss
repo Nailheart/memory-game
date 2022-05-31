@@ -1,0 +1,68 @@
+.game {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  border-radius: 10px;
+}
+
+.game__board {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border: 2px solid #b3b3b3;
+  border-radius: 10px 0 0 10px;
+  box-sizing: border-box;
+}
+
+.game__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  width: 100px;
+  height: 120px;
+  background-color: #009efa;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: .5s;
+
+  &--active {
+    transform: rotateY(180deg);
+    
+    .game__card-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.game__card-icon {
+  width: 65px;
+  height: 65px;
+  opacity: 0;
+  transition: .5s;
+}
+
+// TODO: сделать stiky ? сбоку : сверху как хедер fixed
+.game__setting {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  max-height: calc(100vh - 40px);
+  padding: 20px;
+  background-color: #fff;
+  border: 2px solid #b3b3b3;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  box-sizing: border-box;
+}
+
+.game__difficult-range {
+  margin-bottom: 15px;
+}
+
+.game__start-button {
+  margin-top: auto;
+}

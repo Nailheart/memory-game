@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+
+  <div class="game">
+    <div class="game__board"></div>
+
+    <div class="game__setting">
+      <p class="game__setting-text">Your score: <span class="game__score">0</span></p>
+      <p class="game__setting-text">Cards quantity: <span class="game__difficult"></span></p>
+      <input class="game__difficult-range" type="range" min="8" max="32" step="1">
+      <button class="button game__start-button" type="button">New Game</button>
+    </div>
+  </div>
+  
+  <script src="js/app.min.js"></script>
+</body>
+</html>

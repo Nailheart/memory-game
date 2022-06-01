@@ -1,11 +1,6 @@
 /** TODO:
-  - Добавить логику для new game
-  - Добавить ajax
-  - Добавить лоадер
   - Добавить aria-label="" з описанием иконки или заменить описание на цифры
-  - рефакторинг
-  
-  Заполнять массив iconsNameList атоматичеки брать имена картинок из папки с иконками.
+  - Заполнять массив iconsNameList атоматичеки брать имена картинок из папки с иконками.
 */
 
 (() => {
@@ -16,27 +11,44 @@
   const newGameButton = document.querySelector('.game__start-button');
   const iconsNameList = ['all_inclusive', 'anchor', 'bedtime', 'bus', 'castle', 'category', 'component', 'coronavirus', 'diamond', 'eco', 'fingerprint', 'gas_station', 'heart', 'hourglass_empty', 'key', 'lock', 'money', 'music_note', 'pan_tool', 'park', 'pets', 'qr_code', 'rainy', 'rocket', 'sailing', 'settings', 'shopping_cart', 'smile', 'star', 'sun', 'water', 'work'];
   let gameScore = 0;
-  let cardList = [];
 
-  // display game difficulty
+  // draw quantity cards
   gameDifficultView.textContent = gameDifficultRange.value * 2;
+
+  // update quantity cards handler
   gameDifficultRange.addEventListener('input', () => {
     gameDifficultView.textContent = gameDifficultRange.value * 2;
   });
 
-  // add unique cards to cardList
-  while (gameDifficultRange.value != cardList.length) {
-    const iconIndex = Math.floor(Math.random() * iconsNameList.length);
-    cardList.push(iconsNameList[iconIndex]);
-    cardList = cardList.filter((item, index) => cardList.indexOf(item) === index);
-  }
-
-  // shuffle list
-  const shuffleCards = ((arr) => {
-    return arr.sort(() => 0.5 - Math.random());
+  // start new game hander
+  newGameButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    gameScoreView.textContent = 0;
+    newGame();
   });
 
-  // create card
+  // flip handler
+  gameBoard.addEventListener('click', (e) => {
+    const element = e.target;
+
+    if (element.classList.contains('game__card')) {
+      element.classList.add('game__card--active');
+      element.classList.add('check');
+      gameScoreView.textContent = ++gameScore;
+      checkMatch();
+    }
+  });
+
+  // start new game
+  const newGame = (() => {
+    gameBoard.replaceChildren();
+    generateCards();
+  });
+
+  // shuffle cards
+  const shuffleCards = ((arr) => arr.sort(() => 0.5 - Math.random()));
+
+  // create card node
   const createCard = ((iconName) => {
     const card = document.createElement('div');
     card.classList.add('game__card');
@@ -49,41 +61,39 @@
     gameBoard.append(card);
   });
 
-  // add duplicates
-  cardList = cardList.concat(cardList);
-  // shuffle cards
-  shuffleCards(cardList);
-  // add cards to board
-  cardList.forEach((card) => {
-    createCard(card);
-  });
+  // check match
+  const checkMatch = (() => {
+    const cards = document.querySelectorAll('.check');
+    if (cards.length >= 2) {
+      let data = [];
+      cards.forEach((card) => data.push(card.getAttribute('data-name')));
 
-  // flip and check pair
-  const cards = document.querySelectorAll('.game__card');
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      card.classList.add('game__card--active');
-      card.classList.add('check');
-      gameScore++;
-
-      // update display score
-      gameScoreView.textContent = gameScore;
-
-      // Check pair
-      const cardsActive = document.querySelectorAll('.check');
-      if (cardsActive.length == 2) {
-        if (cardsActive[0].getAttribute('data-name') !== cardsActive[1].getAttribute('data-name')) {
+      for (let i = 1; i < data.length; i++) {
+        if (data[0] !== data[i]) {
           setTimeout(() => {
-            cardsActive.forEach((card) => {
-              card.classList.remove('game__card--active');
-            });
+            cards.forEach((card) => card.classList.remove('game__card--active'));
           }, 700);
+          break;
         }
-
-        cardsActive.forEach((card) => {
-          card.classList.remove('check');
-        });
       }
-    });
+
+      cards.forEach((card) => card.classList.remove('check'));
+    }
   });
+
+  // generation cards on board
+  const generateCards = (() => {
+    let cardList = [];
+
+    while (gameDifficultRange.value != cardList.length) {
+      const iconIndex = Math.floor(Math.random() * iconsNameList.length);
+      cardList.push(iconsNameList[iconIndex]);
+      cardList = cardList.filter((item, index) => cardList.indexOf(item) === index);
+    }
+
+    cardList = cardList.concat(cardList);
+    shuffleCards(cardList);
+    cardList.forEach((card) => createCard(card));
+  });
+  generateCards();
 })();

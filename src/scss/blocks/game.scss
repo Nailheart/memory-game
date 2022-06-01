@@ -43,6 +43,7 @@
   height: 65px;
   opacity: 0;
   transition: .5s;
+  pointer-events: none;
 }
 
 // TODO: сделать stiky ? сбоку : сверху как хедер fixed

@@ -1,8 +1,3 @@
-/** TODO:
-  - Добавить aria-label="" з описанием иконки или заменить описание на цифры
-  - Заполнять массив iconsNameList атоматичеки брать имена картинок из папки с иконками.
-*/
-
 (() => {
   const gameBoard = document.querySelector('.game__board');
   const gameDifficultView = document.querySelector('.game__difficult');
@@ -23,7 +18,6 @@
   // start new game hander
   newGameButton.addEventListener('click', (e) => {
     e.preventDefault();
-    gameScoreView.textContent = 0;
     newGame();
   });
 
@@ -31,7 +25,7 @@
   gameBoard.addEventListener('click', (e) => {
     const element = e.target;
 
-    if (element.classList.contains('game__card')) {
+    if (element.classList.contains('game__card') && !element.classList.contains('game__card--active')) {
       element.classList.add('game__card--active');
       element.classList.add('check');
       gameScoreView.textContent = ++gameScore;
@@ -41,6 +35,8 @@
 
   // start new game
   const newGame = (() => {
+    gameScore = 0;
+    gameScoreView.textContent = 0;
     gameBoard.replaceChildren();
     generateCards();
   });

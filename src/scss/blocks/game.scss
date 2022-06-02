@@ -1,19 +1,30 @@
 .game {
   display: grid;
-  grid-template-columns: 1fr 250px;
   border-radius: 10px;
+
+  @media (min-width: 660px) { grid-template-columns: 1fr 200px; }
+  @media (min-width: 992px) { grid-template-columns: 1fr 250px; }
 }
 
 .game__board {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
   gap: 10px;
-  padding: 20px;
+  margin-top: 135px;
+  padding: 10px;
   background-color: #fff;
   border: 2px solid #b3b3b3;
-  border-radius: 10px 0 0 10px;
+  border-radius: 10px;
   box-sizing: border-box;
+  position: relative;
+
+  @media (min-width: 500px) { margin-top: 100px; }
+  @media (min-width: 660px) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    margin-top: 0;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+  }
 }
 
 .game__card {
@@ -21,13 +32,14 @@
   align-items: center;
   justify-content: center;
   color: #fff;
-  width: 100px;
-  height: 120px;
+  padding: 9px;
   background-color: #009efa;
   border: 1px solid #ccc;
   border-radius: 6px;
+  box-sizing: border-box;
   cursor: pointer;
   transition: .5s;
+  user-select: none;
 
   &--active {
     transform: rotateY(180deg);
@@ -35,6 +47,10 @@
     .game__card-icon {
       opacity: 1;
     }
+  }
+
+  @media (min-width: 660px) {
+    height: 125px;
   }
 }
 
@@ -46,22 +62,45 @@
   pointer-events: none;
 }
 
-// TODO: сделать stiky ? сбоку : сверху как хедер fixed
 .game__setting {
   display: flex;
-  flex-direction: column;
-  width: 250px;
-  max-height: calc(100vh - 40px);
-  padding: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+  padding: 10px 15px;
   background-color: #fff;
-  border: 2px solid #b3b3b3;
-  border-left: none;
-  border-radius: 0 10px 10px 0;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, .4);
   box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  @media (max-width: 659px) {
+    p { margin-bottom: 0; }
+  }
+  @media (min-width: 660px) {
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    padding: 20px;
+    border: 2px solid #b3b3b3;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    box-shadow: none;
+    position: sticky;
+    top: 20px;
+  }
 }
 
 .game__difficult-range {
-  margin-bottom: 15px;
+  flex-grow: 1;
+  width: 100%;
+
+  @media (min-width: 500px) { width: auto; }
+  @media (min-width: 660px) { 
+    flex-grow: 0;
+    width: 100%;
+    margin-bottom: 15px; 
+  }
 }
 
 .game__start-button {

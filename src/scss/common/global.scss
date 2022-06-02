@@ -3,7 +3,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 	min-height: 100vh;
-  padding: 20px;
+  padding: 10px;
   background-color: #f1f1f1;
   background-image: 
     radial-gradient(#000 1px, transparent 1px),
@@ -11,6 +11,8 @@ body {
   background-size: calc(20 * 1px) calc(20 * 1px);
   background-position: 0 0, calc(10 * 1px) calc(10 * 1px);
   box-sizing: border-box;
+
+  @media (min-width: 660px) { padding: 20px; }
 }
 
 img {

@@ -13,6 +13,7 @@
   // update quantity cards handler
   gameDifficultRange.addEventListener('input', () => {
     gameDifficultView.textContent = gameDifficultRange.value * 2;
+    newGame();
   });
 
   // start new game hander

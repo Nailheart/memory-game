@@ -13,16 +13,45 @@
 <body>
 
   <div class="game">
-    <div class="game__board"></div>
-
     <div class="game__setting">
       <p class="game__setting-text">Your score: <span class="game__score">0</span></p>
       <p class="game__setting-text">Cards quantity: <span class="game__difficult"></span></p>
-      <input class="game__difficult-range" type="range" min="8" max="32" step="1">
+      <input class="game__difficult-range" type="range" min="4" max="32" step="1" value="8">
+      <p class="game__setting-text game__setting-text--hide">Board size: <span class="game__board-width"></span>px</p>
+      <input class="game__resize-range" type="range" min="145"></input>
       <button class="button game__start-button" type="button">New Game</button>
     </div>
+
+    <div class="game__board"></div>
   </div>
   
   <script src="js/app.min.js" type="module"></script>
+  <script>
+    const gameBoard = document.querySelector('.game__board');
+    const gameWidthRange = document.querySelector('.game__resize-range');
+    const boardWidthView = document.querySelector('.game__board-width');
+
+    // init size stats
+    gameWidthRange.max = gameBoard.offsetWidth;
+    gameWidthRange.value = gameBoard.offsetWidth;
+    boardWidthView.textContent = gameWidthRange.value;
+
+    // input handler
+    gameWidthRange.addEventListener('input', () => {
+      boardWidthView.textContent = gameWidthRange.value;
+      gameBoard.setAttribute('style', `width: ${gameWidthRange.value}px`);
+    });
+
+    // page resize handler
+    window.addEventListener('resize', () => {
+      gameBoard.removeAttribute('style');
+
+      if (window.innerWidth > 660) {
+        gameWidthRange.max = gameBoard.offsetWidth;
+        gameWidthRange.value = gameBoard.offsetWidth;
+        boardWidthView.textContent = gameWidthRange.value;
+      }
+    });
+  </script>
 </body>
 </html>
